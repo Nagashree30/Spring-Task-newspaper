@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<context:component-scan base-package="com.chimera.news"></context:component-scan>
+
+<bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+<property name="dataSource" ref="driverManagerDataSource"></property>
+<property name="annotatedClasses">
+<value>com.chimera.news.entity.NewsPaperEntity</value>
+</property>
+</bean>
+
+<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+ id="driverManagerDataSource">
+ <constructor-arg value="${driverManagerDataSource.url}"></constructor-arg>
+  <constructor-arg value="${driverManagerDataSource.username}"></constructor-arg>
+   <constructor-arg value="${driverManagerDataSource.password}"></constructor-arg>
+   <property name="driverClassName" value="${driverManagerDataSource.driverClassName}"></property>
+</bean>
+
+<bean 
+class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" 
+id="PropertyPlaceholderConfigurer">
+<property name="location" value="/WEB-INF/classes/database.properties"></property>
+</bean>
+
+<bean 
+ class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+ id="internalResourceViewResolver">
+ <constructor-arg name="prefix" value="/WEB-INF/pages/"></constructor-arg>
+ <constructor-arg name="suffix" value=".jsp"></constructor-arg>
+ </bean>
+</beans>
